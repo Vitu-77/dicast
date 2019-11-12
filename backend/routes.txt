@@ -1,0 +1,16 @@
+//? comentários
+//* (GET)   - '/comments?podcast_id=1' => Retorna todos os comentários do podcast
+//* (POST)  - '/comments/:podcast_id/new' => Adiciona um comentário ao podcast
+
+//? usuários
+//* (GET)   - 'users?user_id=1' => Retorna um usuário específico
+//* (POST)  - '/users/new' => Cria um usuário - (Campos no BODY)
+
+//? podcasts
+//* (GET)   - '/podcasts' => Retorna todos os podcasts
+//* (GET)   - '/podcast?podcast_id=1' => Retorna um podcast específico
+//* (POST)  - '/podcasts/new' => Cria um podcast - (Campos no BODY)
+
+//? autenticação
+//* (GET)   - '/is_authenticated' => Retorna um boolean informando a validade do token passado nos headers
+//* (POST)  - '/authenticate' => Verifica as credenciais e retorna o token de acesso
