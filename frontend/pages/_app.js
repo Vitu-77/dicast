@@ -5,7 +5,6 @@ import UserProvider from '../global/providers/UserProvider';
 
 class MainApp extends App {
     render() {
-
         const { Component, pageProps } = this.props;
 
         return (

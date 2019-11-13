@@ -30,11 +30,11 @@ module.exports = {
         });
 
         if (!user) {
-            return res.status(404).json({ error: 'user not found' });
+            return res.status(200).json({ error: 'user not found' });
         }
 
         if (password !== user.password) {
-            return res.status(401).json({ error: 'invalid password' });
+            return res.status(200).json({ error: 'invalid password' });
         }
 
         const token = await jwt.sign({ username, password }, process.env.SECRET);

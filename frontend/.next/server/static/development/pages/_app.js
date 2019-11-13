@@ -122,8 +122,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _contexts_UserContext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../contexts/UserContext */ "./global/contexts/UserContext.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! js-cookie */ "js-cookie");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_2__);
 var _jsxFileName = "C:\\Users\\marce\\Programa\xE7\xE3o\\Projetos\\dicast\\frontend\\global\\providers\\UserProvider.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
 
 
 
@@ -133,19 +136,21 @@ const UserProvider = ({
   const {
     0: user,
     1: _setUser
-  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({});
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+    username: js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.get('USERNAME')
+  });
 
   const showUser = () => console.log(user);
 
   return __jsx(_contexts_UserContext__WEBPACK_IMPORTED_MODULE_1__["default"].Provider, {
     value: {
       user,
-      _setUser,
-      showUser
+      showUser,
+      _setUser
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 11
+      lineNumber: 15
     },
     __self: undefined
   }, children);
@@ -2052,13 +2057,13 @@ class MainApp extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
     return __jsx(_global_providers_UserProvider__WEBPACK_IMPORTED_MODULE_3__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 12
+        lineNumber: 11
       },
       __self: this
     }, __jsx(Component, Object(_babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, pageProps, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 13
+        lineNumber: 12
       },
       __self: this
     })));
@@ -2145,6 +2150,17 @@ module.exports = require("core-js/library/fn/object/keys");
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/library/fn/promise");
+
+/***/ }),
+
+/***/ "js-cookie":
+/*!****************************!*\
+  !*** external "js-cookie" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("js-cookie");
 
 /***/ }),
 

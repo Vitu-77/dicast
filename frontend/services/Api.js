@@ -1,22 +1,20 @@
 import Cookies from 'js-cookie';
 import Axios from 'axios';
 import Router from 'next/router'
+import jwt from 'jwt-simple';
 
 const Fetch = Axios.create({ baseURL: 'http://localhost:3333' });
 
 export default {
-    async isAuthenticated(setLoading) {
-
-        console.log();
+    async isAuthenticated(setLoading, isLoginPage) {
 
         const token = Cookies.get('DICAST_AUTH_TOKEN');
 
         if (token === undefined || token === null || token === '') {
-            Router.push('/login');
-            return false;
+            isLoginPage ? setLoading(false) : Router.push('/login');
         }
         else {
-            try {
+            try {             
                 const response = await Axios.get('http://localhost:3333/is_authenticated', {
                     headers: { token }
                 });
@@ -24,28 +22,58 @@ export default {
                 const { isAuthenticated } = response.data;
 
                 if (!isAuthenticated) {
-                    Router.push('/login');
-                    return false;
+                    if (!isLoginPage) {
+                        Router.push('/login');
+                    }
+                    else {
+                        setLoading(false);
+                    }
                 }
                 else {
-                    return true;
+                    if (isLoginPage) {
+                        Router.push('/');
+                    }
+                    else {
+                        setLoading(false);
+                    }
                 }
             } catch (error) {
                 Router.push('/login');
-                return false;
             }
         }
     },
 
-    async authenticate(username, password, _setUser) {
+    async authenticate(username, password, _setUser, setLoginError, persistLogged) {
         const { data } = await Fetch.post('/authenticate', { username, password });
 
-        const { user, auth } = data;
+        const { user, auth, error } = data;
 
-        _setUser(user);
-        Cookies.set('DICAST_AUTH_TOKEN', auth);
-        Cookies.set('USERNAME', user.username);
-        //TODO Cookies.set('ACESS_LEVEL', user.acess_level);
+        if (!error) {
+            await _setUser(user);
+
+            if (persistLogged) {
+                Cookies.set('DICAST_AUTH_TOKEN', auth, { expires: 50000 });
+                Cookies.set('USERNAME', user.username, { expires: 50000 });
+                //TODO colocar o resto das infos nos cookies
+            }
+            else {
+                Cookies.set('DICAST_AUTH_TOKEN', auth);
+                Cookies.set('USERNAME', user.username);
+                //TODO colocar o resto das infos nos cookies
+            }
+
+            Router.push('/');
+        }
+        else {
+            switch (error) {
+                case 'user not found': setLoginError(1);
+                    break;
+                case 'invalid password': setLoginError(2);
+                    break;
+                default: setLoginError(1);
+                    break;
+            }
+        }
     },
 
     async getUser(userId, setUser) {

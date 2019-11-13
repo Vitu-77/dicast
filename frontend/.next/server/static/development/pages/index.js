@@ -88,10 +88,27 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "./global/contexts/UserContext.js":
+/*!****************************************!*\
+  !*** ./global/contexts/UserContext.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+const UserContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"])();
+/* harmony default export */ __webpack_exports__["default"] = (UserContext);
+
+/***/ }),
 
 /***/ "./pages/index.js":
 /*!************************!*\
@@ -105,33 +122,67 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/Api */ "./services/Api.js");
+/* harmony import */ var _global_contexts_UserContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../global/contexts/UserContext */ "./global/contexts/UserContext.js");
 var _jsxFileName = "C:\\Users\\marce\\Programa\xE7\xE3o\\Projetos\\dicast\\frontend\\pages\\index.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
+
 const Index = () => {
   const {
-    0: authenticated,
-    1: setAuthenticated
-  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
+    user,
+    showUser
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_global_contexts_UserContext__WEBPACK_IMPORTED_MODULE_2__["default"]);
+  const {
+    0: loading,
+    1: setLoading
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    _services_Api__WEBPACK_IMPORTED_MODULE_1__["default"].isAuthenticated(setAuthenticated);
-    return () => setAuthenticated(false);
+    const isAuthenticated = async () => await _services_Api__WEBPACK_IMPORTED_MODULE_1__["default"].isAuthenticated(setLoading, false);
+
+    isAuthenticated();
   }, []);
   return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 15
+      lineNumber: 18
     },
     __self: undefined
-  }, authenticated ? __jsx("h1", {
+  }, loading ? __jsx("h1", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 16
+      lineNumber: 21
     },
     __self: undefined
-  }, "INDEX") : 'LOADING...');
+  }, "Loading...") : __jsx("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 23
+    },
+    __self: undefined
+  }, __jsx("h1", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 24
+    },
+    __self: undefined
+  }, user.username), __jsx("button", {
+    onClick: showUser,
+    type: "button",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 25
+    },
+    __self: undefined
+  }, "Show user")), __jsx("a", {
+    href: "/redirect",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 29
+    },
+    __self: undefined
+  }, "link"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Index);
@@ -153,6 +204,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/router */ "next/router");
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var jwt_simple__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jwt-simple */ "jwt-simple");
+/* harmony import */ var jwt_simple__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jwt_simple__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -160,13 +214,11 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   baseURL: 'http://localhost:3333'
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  async isAuthenticated(setLoading) {
-    console.log();
+  async isAuthenticated(setLoading, isLoginPage) {
     const token = js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('DICAST_AUTH_TOKEN');
 
     if (token === undefined || token === null || token === '') {
-      next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
-      return false;
+      isLoginPage ? setLoading(false) : next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
     } else {
       try {
         const response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:3333/is_authenticated', {
@@ -179,19 +231,25 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
         } = response.data;
 
         if (!isAuthenticated) {
-          next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
-          return false;
+          if (!isLoginPage) {
+            next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
+          } else {
+            setLoading(false);
+          }
         } else {
-          return true;
+          if (isLoginPage) {
+            next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/');
+          } else {
+            setLoading(false);
+          }
         }
       } catch (error) {
         next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
-        return false;
       }
     }
   },
 
-  async authenticate(username, password, _setUser) {
+  async authenticate(username, password, _setUser, setLoginError, persistLogged) {
     const {
       data
     } = await Fetch.post('/authenticate', {
@@ -200,13 +258,41 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
     });
     const {
       user,
-      auth
+      auth,
+      error
     } = data;
 
-    _setUser(user);
+    if (!error) {
+      await _setUser(user);
 
-    js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('DICAST_AUTH_TOKEN', auth);
-    js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('USERNAME', user.username); //TODO Cookies.set('ACESS_LEVEL', user.acess_level);
+      if (persistLogged) {
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('DICAST_AUTH_TOKEN', auth, {
+          expires: 50000
+        });
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('USERNAME', user.username, {
+          expires: 50000
+        }); //TODO colocar o resto das infos nos cookies
+      } else {
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('DICAST_AUTH_TOKEN', auth);
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('USERNAME', user.username); //TODO colocar o resto das infos nos cookies
+      }
+
+      next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/');
+    } else {
+      switch (error) {
+        case 'user not found':
+          setLoginError(1);
+          break;
+
+        case 'invalid password':
+          setLoginError(2);
+          break;
+
+        default:
+          setLoginError(1);
+          break;
+      }
+    }
   },
 
   async getUser(userId, setUser) {
@@ -223,7 +309,7 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
 
 /***/ }),
 
-/***/ 3:
+/***/ 5:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/
@@ -254,6 +340,17 @@ module.exports = require("axios");
 /***/ (function(module, exports) {
 
 module.exports = require("js-cookie");
+
+/***/ }),
+
+/***/ "jwt-simple":
+/*!*****************************!*\
+  !*** external "jwt-simple" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("jwt-simple");
 
 /***/ }),
 

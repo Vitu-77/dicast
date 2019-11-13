@@ -1,44 +1,20 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Api from '../services/Api';
 import UserContext from '../global/contexts/UserContext';
-import Head from 'next/head';
-
-const Header = () => (
-    <Head>
-        <title>CCCCC</title>
-        <meta name="description" content="CCCCCCCCC" />
-        <meta property="og:type" content="website" />
-        <meta name="og:title" property="og:title" content="SSSSSS" />
-        <meta name="og:description" property="og:description" content="SSSSS" />
-        <meta property="og:site_name" content="SSS" />
-        <meta property="og:url" content="SSSS" />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="" />
-        <meta name="twitter:description" content="asxasxasx" />
-        <meta name="twitter:site" content="asxasx" />
-        <meta name="twitter:creator" content="xasxasx" />
-        <meta property="og:image" content="xasxasx" />
-        <meta name="twitter:image" content="xasxasxasx" />
-    </Head>
-);
 
 const Login = () => {
 
-    const { _setUser, showUser } = useContext(UserContext);
+    const { _setUser } = useContext(UserContext);
 
     const [username, setUsername] = useState('Vitu_77sC');
     const [password, setPassword] = useState('12345');
-    const [authenticated, setAuthenticated] = useState(false);
-    const [loading, _setLoading] = useState(true);
+    
+    const [persistLogged, setPersistLogged] = useState(false);
+    const [loginError, setLoginError] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const isAuthenticated = async () => {
-            const isAuthenticated = await Api.isAuthenticated();
-
-            await isAuthenticated === true ? setAuthenticated(true) : setAuthenticated(false);
-
-            setTimeout(() => _setLoading(false), 700);
-        }
+        const isAuthenticated = async () => await Api.isAuthenticated(setLoading, true);
 
         isAuthenticated();
     }, []);
@@ -56,11 +32,10 @@ const Login = () => {
         }
     }
 
-    const submit = () => Api.authenticate(username, password, _setUser);
-
+    const submit = () => Api.authenticate(username, password, _setUser, setLoginError, persistLogged);
+    
     return (
         <React.Fragment>
-            <Header />
             {
                 loading
                     ? <h1>Loading...</h1>
@@ -79,12 +54,16 @@ const Login = () => {
                                 onChange={handleChange}
                                 value={password}
                             />
+                            Remember me
+                            <input
+                                type='checkbox'
+                                onChange={() => setPersistLogged(!persistLogged)}
+                            />
                             <button onClick={submit} type='button'>Submit</button>
-                            <button onClick={showUser} type='button'>Show user</button>
                             {
-                                authenticated
-                                    ? <button onClick={showUser} type='button'>SAIR</button>
-                                    : <button onClick={showUser} type='button'>ENTRAR</button>
+                                loginError === 1 ? <span>AAAAA</span> : (
+                                    loginError === 2 ? <span>NBBBBBB</span> : null
+                                )
                             }
                         </form>
                     </React.Fragment>

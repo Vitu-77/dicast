@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -123,139 +123,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/Api */ "./services/Api.js");
 /* harmony import */ var _global_contexts_UserContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../global/contexts/UserContext */ "./global/contexts/UserContext.js");
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! next/head */ "next/head");
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_3__);
 var _jsxFileName = "C:\\Users\\marce\\Programa\xE7\xE3o\\Projetos\\dicast\\frontend\\pages\\login.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
 
-
-const Header = () => __jsx(next_head__WEBPACK_IMPORTED_MODULE_3___default.a, {
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 7
-  },
-  __self: undefined
-}, __jsx("title", {
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 8
-  },
-  __self: undefined
-}, "CCCCC"), __jsx("meta", {
-  name: "description",
-  content: "CCCCCCCCC",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 9
-  },
-  __self: undefined
-}), __jsx("meta", {
-  property: "og:type",
-  content: "website",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 10
-  },
-  __self: undefined
-}), __jsx("meta", {
-  name: "og:title",
-  property: "og:title",
-  content: "SSSSSS",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 11
-  },
-  __self: undefined
-}), __jsx("meta", {
-  name: "og:description",
-  property: "og:description",
-  content: "SSSSS",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 12
-  },
-  __self: undefined
-}), __jsx("meta", {
-  property: "og:site_name",
-  content: "SSS",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 13
-  },
-  __self: undefined
-}), __jsx("meta", {
-  property: "og:url",
-  content: "SSSS",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 14
-  },
-  __self: undefined
-}), __jsx("meta", {
-  name: "twitter:card",
-  content: "summary",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 15
-  },
-  __self: undefined
-}), __jsx("meta", {
-  name: "twitter:title",
-  content: "",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 16
-  },
-  __self: undefined
-}), __jsx("meta", {
-  name: "twitter:description",
-  content: "asxasxasx",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 17
-  },
-  __self: undefined
-}), __jsx("meta", {
-  name: "twitter:site",
-  content: "asxasx",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 18
-  },
-  __self: undefined
-}), __jsx("meta", {
-  name: "twitter:creator",
-  content: "xasxasx",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 19
-  },
-  __self: undefined
-}), __jsx("meta", {
-  property: "og:image",
-  content: "xasxasx",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 20
-  },
-  __self: undefined
-}), __jsx("meta", {
-  name: "twitter:image",
-  content: "xasxasxasx",
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 21
-  },
-  __self: undefined
-}));
-
 const Login = () => {
   const {
-    _setUser,
-    showUser
+    _setUser
   } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_global_contexts_UserContext__WEBPACK_IMPORTED_MODULE_2__["default"]);
   const {
     0: username,
@@ -266,19 +142,19 @@ const Login = () => {
     1: setPassword
   } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('12345');
   const {
-    0: authenticated,
-    1: setAuthenticated
+    0: persistLogged,
+    1: setPersistLogged
   } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
   const {
+    0: loginError,
+    1: setLoginError
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
+  const {
     0: loading,
-    1: _setLoading
-  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true);
+    1: setLoading
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    const isAuthenticated = async () => {
-      const isAuthenticated = await _services_Api__WEBPACK_IMPORTED_MODULE_1__["default"].isAuthenticated();
-      (await isAuthenticated) === true ? setAuthenticated(true) : setAuthenticated(false);
-      setTimeout(() => _setLoading(false), 700);
-    };
+    const isAuthenticated = async () => await _services_Api__WEBPACK_IMPORTED_MODULE_1__["default"].isAuthenticated(setLoading, true);
 
     isAuthenticated();
   }, []);
@@ -301,36 +177,30 @@ const Login = () => {
     }
   };
 
-  const submit = () => _services_Api__WEBPACK_IMPORTED_MODULE_1__["default"].authenticate(username, password, _setUser);
+  const submit = () => _services_Api__WEBPACK_IMPORTED_MODULE_1__["default"].authenticate(username, password, _setUser, setLoginError, persistLogged);
 
   return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 62
+      lineNumber: 38
     },
     __self: undefined
-  }, __jsx(Header, {
+  }, loading ? __jsx("h1", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 63
-    },
-    __self: undefined
-  }), loading ? __jsx("h1", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 66
+      lineNumber: 41
     },
     __self: undefined
   }, "Loading...") : __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 68
+      lineNumber: 43
     },
     __self: undefined
   }, __jsx("form", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 69
+      lineNumber: 44
     },
     __self: undefined
   }, __jsx("input", {
@@ -340,7 +210,7 @@ const Login = () => {
     value: username,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 70
+      lineNumber: 45
     },
     __self: undefined
   }), __jsx("input", {
@@ -350,7 +220,15 @@ const Login = () => {
     value: password,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 76
+      lineNumber: 51
+    },
+    __self: undefined
+  }), "Remember me", __jsx("input", {
+    type: "checkbox",
+    onChange: () => setPersistLogged(!persistLogged),
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 58
     },
     __self: undefined
   }), __jsx("button", {
@@ -358,34 +236,22 @@ const Login = () => {
     type: "button",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 82
+      lineNumber: 62
     },
     __self: undefined
-  }, "Submit"), __jsx("button", {
-    onClick: showUser,
-    type: "button",
+  }, "Submit"), loginError === 1 ? __jsx("span", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 83
+      lineNumber: 64
     },
     __self: undefined
-  }, "Show user"), authenticated ? __jsx("button", {
-    onClick: showUser,
-    type: "button",
+  }, "AAAAA") : loginError === 2 ? __jsx("span", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 86
+      lineNumber: 65
     },
     __self: undefined
-  }, "SAIR") : __jsx("button", {
-    onClick: showUser,
-    type: "button",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 87
-    },
-    __self: undefined
-  }, "ENTRAR"))));
+  }, "NBBBBBB") : null)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Login);
@@ -407,6 +273,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/router */ "next/router");
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var jwt_simple__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jwt-simple */ "jwt-simple");
+/* harmony import */ var jwt_simple__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jwt_simple__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -414,13 +283,11 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   baseURL: 'http://localhost:3333'
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  async isAuthenticated(setLoading) {
-    console.log();
+  async isAuthenticated(setLoading, isLoginPage) {
     const token = js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('DICAST_AUTH_TOKEN');
 
     if (token === undefined || token === null || token === '') {
-      next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
-      return false;
+      isLoginPage ? setLoading(false) : next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
     } else {
       try {
         const response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:3333/is_authenticated', {
@@ -433,19 +300,25 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
         } = response.data;
 
         if (!isAuthenticated) {
-          next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
-          return false;
+          if (!isLoginPage) {
+            next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
+          } else {
+            setLoading(false);
+          }
         } else {
-          return true;
+          if (isLoginPage) {
+            next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/');
+          } else {
+            setLoading(false);
+          }
         }
       } catch (error) {
         next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
-        return false;
       }
     }
   },
 
-  async authenticate(username, password, _setUser) {
+  async authenticate(username, password, _setUser, setLoginError, persistLogged) {
     const {
       data
     } = await Fetch.post('/authenticate', {
@@ -454,13 +327,41 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
     });
     const {
       user,
-      auth
+      auth,
+      error
     } = data;
 
-    _setUser(user);
+    if (!error) {
+      await _setUser(user);
 
-    js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('DICAST_AUTH_TOKEN', auth);
-    js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('USERNAME', user.username); //TODO Cookies.set('ACESS_LEVEL', user.acess_level);
+      if (persistLogged) {
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('DICAST_AUTH_TOKEN', auth, {
+          expires: 50000
+        });
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('USERNAME', user.username, {
+          expires: 50000
+        }); //TODO colocar o resto das infos nos cookies
+      } else {
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('DICAST_AUTH_TOKEN', auth);
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('USERNAME', user.username); //TODO colocar o resto das infos nos cookies
+      }
+
+      next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/');
+    } else {
+      switch (error) {
+        case 'user not found':
+          setLoginError(1);
+          break;
+
+        case 'invalid password':
+          setLoginError(2);
+          break;
+
+        default:
+          setLoginError(1);
+          break;
+      }
+    }
   },
 
   async getUser(userId, setUser) {
@@ -477,7 +378,7 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /*!******************************!*\
   !*** multi ./pages/login.js ***!
   \******************************/
@@ -511,14 +412,14 @@ module.exports = require("js-cookie");
 
 /***/ }),
 
-/***/ "next/head":
-/*!****************************!*\
-  !*** external "next/head" ***!
-  \****************************/
+/***/ "jwt-simple":
+/*!*****************************!*\
+  !*** external "jwt-simple" ***!
+  \*****************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = require("next/head");
+module.exports = require("jwt-simple");
 
 /***/ }),
 
