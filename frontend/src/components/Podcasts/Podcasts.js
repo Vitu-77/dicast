@@ -26,12 +26,15 @@ const Podcasts = () => {
             <button onClick={() => fetchData(search)}>SEARCH</button>
             {
                 podcasts
-                    ? podcasts.map(podcast => <PodcastCard key={podcasts.id}
-                        id={podcast.id}
-                        podcastName={podcast.podcast_name}
-                        src={podcast.src}
-                        createdAt={podcast.createdAt}
-                    />)
+                    ? podcasts.map(podcast => (
+                        <PodcastCard
+                            key={podcast.id}
+                            id={podcast.id}
+                            podcastName={podcast.podcast_name}
+                            src={podcast.src}
+                            createdAt={podcast.createdAt}
+                        />
+                    ))
                     : <h3>Loading Podcasts...</h3>
             }
         </React.Fragment >

@@ -88,10 +88,21 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/date/now.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/date/now.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/date/now */ "core-js/library/fn/date/now");
+
+/***/ }),
 
 /***/ "./pages/index.js":
 /*!************************!*\
@@ -219,10 +230,21 @@ const Index = () => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/date/now */ "./node_modules/@babel/runtime-corejs2/core-js/date/now.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _helpers_DateHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DateHandler */ "./src/helpers/DateHandler.js");
+/* harmony import */ var _Style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Style.css */ "./src/components/PodcastCard/Style.css");
+/* harmony import */ var _Style_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Style_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_h5_audio_player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-h5-audio-player */ "react-h5-audio-player");
+/* harmony import */ var react_h5_audio_player__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_h5_audio_player__WEBPACK_IMPORTED_MODULE_4__);
+
 var _jsxFileName = "c:\\Users\\marce\\Programa\xE7\xE3o\\Projetos\\dicast\\frontend\\src\\components\\PodcastCard\\PodcastCard.js";
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+var __jsx = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement;
+
+
+
 
 
 const PodcastCard = ({
@@ -231,41 +253,71 @@ const PodcastCard = ({
   src,
   createdAt
 }) => {
-  const showId = () => console.log({
-    id
-  });
-
+  const currentDate = new Date(_babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0___default()());
+  const podcastDate = new Date(`${createdAt}`);
+  const {
+    0: podcastAge,
+    1: setPodcastAge
+  } = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(Number);
+  const formatedDate = _helpers_DateHandler__WEBPACK_IMPORTED_MODULE_2__["default"].formatDate(createdAt);
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(() => {
+    const differenceBetweenDates = Math.abs(podcastDate - currentDate);
+    const daysBetweenDates = Math.ceil(differenceBetweenDates / (1000 * 60 * 60 * 24));
+    setPodcastAge(daysBetweenDates);
+  }, [currentDate]);
   return __jsx("div", {
-    onClick: showId,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 8
+      lineNumber: 24
     },
     __self: undefined
   }, __jsx("h3", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 9
+      lineNumber: 25
     },
     __self: undefined
-  }, podcastName), __jsx("audio", {
+  }, podcastName), __jsx(react_h5_audio_player__WEBPACK_IMPORTED_MODULE_4___default.a, {
     src: src,
     controls: true,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 10
+      lineNumber: 26
     },
     __self: undefined
-  }), __jsx("span", {
+  }), podcastAge <= 2 ? __jsx("time", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 11
+      lineNumber: 29
     },
     __self: undefined
-  }, createdAt));
+  }, "NOVO") : podcastAge > 2 && podcastAge <= 9 ? __jsx("time", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 31
+    },
+    __self: undefined
+  }, podcastAge, " ", podcastAge > 1 ? 'dias atrás' : 'dia atrás') : __jsx("time", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 32
+    },
+    __self: undefined
+  }, formatedDate));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (PodcastCard);
+
+/***/ }),
+
+/***/ "./src/components/PodcastCard/Style.css":
+/*!**********************************************!*\
+  !*** ./src/components/PodcastCard/Style.css ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
 
 /***/ }),
 
@@ -333,20 +385,20 @@ const Podcasts = () => {
     },
     __self: undefined
   }, "SEARCH"), podcasts ? podcasts.map(podcast => __jsx(_PodcastCard_PodcastCard__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    key: podcasts.id,
+    key: podcast.id,
     id: podcast.id,
     podcastName: podcast.podcast_name,
     src: podcast.src,
     createdAt: podcast.createdAt,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 29
+      lineNumber: 30
     },
     __self: undefined
   })) : __jsx("h3", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 35
+      lineNumber: 38
     },
     __self: undefined
   }, "Loading Podcasts..."));
@@ -370,6 +422,28 @@ __webpack_require__.r(__webpack_exports__);
 
 const UserContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"])();
 /* harmony default export */ __webpack_exports__["default"] = (UserContext);
+
+/***/ }),
+
+/***/ "./src/helpers/DateHandler.js":
+/*!************************************!*\
+  !*** ./src/helpers/DateHandler.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  formatDate(date) {
+    const strDate = date.toString().replace('T', "-");
+    const day = strDate.split('-')[2];
+    const mouth = strDate.split('-')[1];
+    const year = strDate.split('-')[0];
+    return `${day} - ${mouth} - ${year}`;
+  }
+
+});
 
 /***/ }),
 
@@ -497,7 +571,7 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/
@@ -517,6 +591,17 @@ module.exports = __webpack_require__(/*! c:\Users\marce\Programação\Projetos\d
 /***/ (function(module, exports) {
 
 module.exports = require("axios");
+
+/***/ }),
+
+/***/ "core-js/library/fn/date/now":
+/*!**********************************************!*\
+  !*** external "core-js/library/fn/date/now" ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/library/fn/date/now");
 
 /***/ }),
 
@@ -550,6 +635,17 @@ module.exports = require("next/router");
 /***/ (function(module, exports) {
 
 module.exports = require("react");
+
+/***/ }),
+
+/***/ "react-h5-audio-player":
+/*!****************************************!*\
+  !*** external "react-h5-audio-player" ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-h5-audio-player");
 
 /***/ })
 
