@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
-import Api from '../services/Api';
-import UserContext from '../global/contexts/UserContext';
+import Api from '../src/services/Api';
+
+import Podcasts from '../src/components/Podcasts/Podcasts';
+import UserContext from '../src/global/contexts/UserContext';
 
 const Index = () => {
 
-    const { user, showUser } = useContext(UserContext);
+    const { user, initUser } = useContext(UserContext);
 
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        initUser();
         const isAuthenticated = async () => await Api.isAuthenticated(setLoading, false);
 
         isAuthenticated();
@@ -21,8 +24,15 @@ const Index = () => {
                     ? <h1>Loading...</h1>
                     : (
                         <div>
-                            <h1>{ user.username }</h1>
-                            <button onClick={showUser} type='button'>Show user</button>
+                            <h1>{user.name}</h1>
+                            <h4>{user.username}</h4>
+                            <h4>{user.id}</h4>
+                            <h4>{user.userAvatar}</h4>
+                            <img style={{
+                                'borderRadius': '100%'
+                            }} width='300px' src={user.userAvatar} alt={user.name} />
+                            {user.acess_level === 2 ? <button>New Podcast</button> : null}
+                            <Podcasts />
                         </div>
                     )
             }

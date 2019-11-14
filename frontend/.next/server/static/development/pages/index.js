@@ -88,15 +88,278 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./global/contexts/UserContext.js":
-/*!****************************************!*\
-  !*** ./global/contexts/UserContext.js ***!
-  \****************************************/
+/***/ "./pages/index.js":
+/*!************************!*\
+  !*** ./pages/index.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _src_services_Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/services/Api */ "./src/services/Api.js");
+/* harmony import */ var _src_components_Podcasts_Podcasts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/components/Podcasts/Podcasts */ "./src/components/Podcasts/Podcasts.js");
+/* harmony import */ var _src_global_contexts_UserContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/global/contexts/UserContext */ "./src/global/contexts/UserContext.js");
+var _jsxFileName = "c:\\Users\\marce\\Programa\xE7\xE3o\\Projetos\\dicast\\frontend\\pages\\index.js";
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+
+
+
+
+const Index = () => {
+  const {
+    user,
+    initUser
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_src_global_contexts_UserContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
+  const {
+    0: loading,
+    1: setLoading
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    initUser();
+
+    const isAuthenticated = async () => await _src_services_Api__WEBPACK_IMPORTED_MODULE_1__["default"].isAuthenticated(setLoading, false);
+
+    isAuthenticated();
+  }, []);
+  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 21
+    },
+    __self: undefined
+  }, loading ? __jsx("h1", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 24
+    },
+    __self: undefined
+  }, "Loading...") : __jsx("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 26
+    },
+    __self: undefined
+  }, __jsx("h1", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 27
+    },
+    __self: undefined
+  }, user.name), __jsx("h4", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 28
+    },
+    __self: undefined
+  }, user.username), __jsx("h4", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 29
+    },
+    __self: undefined
+  }, user.id), __jsx("h4", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 30
+    },
+    __self: undefined
+  }, user.userAvatar), __jsx("img", {
+    style: {
+      'borderRadius': '100%'
+    },
+    width: "300px",
+    src: user.userAvatar,
+    alt: user.name,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 31
+    },
+    __self: undefined
+  }), user.acess_level === 2 ? __jsx("button", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 34
+    },
+    __self: undefined
+  }, "New Podcast") : null, __jsx(_src_components_Podcasts_Podcasts__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 35
+    },
+    __self: undefined
+  })), __jsx("a", {
+    href: "/redirect",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 39
+    },
+    __self: undefined
+  }, "link"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Index);
+
+/***/ }),
+
+/***/ "./src/components/PodcastCard/PodcastCard.js":
+/*!***************************************************!*\
+  !*** ./src/components/PodcastCard/PodcastCard.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+var _jsxFileName = "c:\\Users\\marce\\Programa\xE7\xE3o\\Projetos\\dicast\\frontend\\src\\components\\PodcastCard\\PodcastCard.js";
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+
+const PodcastCard = ({
+  id,
+  podcastName,
+  src,
+  createdAt
+}) => {
+  const showId = () => console.log({
+    id
+  });
+
+  return __jsx("div", {
+    onClick: showId,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 8
+    },
+    __self: undefined
+  }, __jsx("h3", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 9
+    },
+    __self: undefined
+  }, podcastName), __jsx("audio", {
+    src: src,
+    controls: true,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 10
+    },
+    __self: undefined
+  }), __jsx("span", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 11
+    },
+    __self: undefined
+  }, createdAt));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (PodcastCard);
+
+/***/ }),
+
+/***/ "./src/components/Podcasts/Podcasts.js":
+/*!*********************************************!*\
+  !*** ./src/components/Podcasts/Podcasts.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Api */ "./src/services/Api.js");
+/* harmony import */ var _PodcastCard_PodcastCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../PodcastCard/PodcastCard */ "./src/components/PodcastCard/PodcastCard.js");
+var _jsxFileName = "c:\\Users\\marce\\Programa\xE7\xE3o\\Projetos\\dicast\\frontend\\src\\components\\Podcasts\\Podcasts.js";
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+
+
+
+const Podcasts = () => {
+  const {
+    0: podcasts,
+    1: setPodcasts
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
+  const {
+    0: search,
+    1: setSearch
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    fetchData('');
+  }, []);
+
+  const fetchData = async search => {
+    const data = await _services_Api__WEBPACK_IMPORTED_MODULE_1__["default"].getPodcasts(search);
+    setPodcasts(data);
+  };
+
+  const handleChange = e => {
+    setSearch(e.target.value);
+  };
+
+  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 24
+    },
+    __self: undefined
+  }, __jsx("input", {
+    type: "text",
+    onChange: handleChange,
+    value: search,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 25
+    },
+    __self: undefined
+  }), __jsx("button", {
+    onClick: () => fetchData(search),
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 26
+    },
+    __self: undefined
+  }, "SEARCH"), podcasts ? podcasts.map(podcast => __jsx(_PodcastCard_PodcastCard__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    key: podcasts.id,
+    id: podcast.id,
+    podcastName: podcast.podcast_name,
+    src: podcast.src,
+    createdAt: podcast.createdAt,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 29
+    },
+    __self: undefined
+  })) : __jsx("h3", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 35
+    },
+    __self: undefined
+  }, "Loading Podcasts..."));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Podcasts);
+
+/***/ }),
+
+/***/ "./src/global/contexts/UserContext.js":
+/*!********************************************!*\
+  !*** ./src/global/contexts/UserContext.js ***!
+  \********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -110,89 +373,10 @@ const UserContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"])(
 
 /***/ }),
 
-/***/ "./pages/index.js":
-/*!************************!*\
-  !*** ./pages/index.js ***!
-  \************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _services_Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/Api */ "./services/Api.js");
-/* harmony import */ var _global_contexts_UserContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../global/contexts/UserContext */ "./global/contexts/UserContext.js");
-var _jsxFileName = "C:\\Users\\marce\\Programa\xE7\xE3o\\Projetos\\dicast\\frontend\\pages\\index.js";
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
-
-
-
-
-const Index = () => {
-  const {
-    user,
-    showUser
-  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_global_contexts_UserContext__WEBPACK_IMPORTED_MODULE_2__["default"]);
-  const {
-    0: loading,
-    1: setLoading
-  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    const isAuthenticated = async () => await _services_Api__WEBPACK_IMPORTED_MODULE_1__["default"].isAuthenticated(setLoading, false);
-
-    isAuthenticated();
-  }, []);
-  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 18
-    },
-    __self: undefined
-  }, loading ? __jsx("h1", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 21
-    },
-    __self: undefined
-  }, "Loading...") : __jsx("div", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 23
-    },
-    __self: undefined
-  }, __jsx("h1", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 24
-    },
-    __self: undefined
-  }, user.username), __jsx("button", {
-    onClick: showUser,
-    type: "button",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 25
-    },
-    __self: undefined
-  }, "Show user")), __jsx("a", {
-    href: "/redirect",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 29
-    },
-    __self: undefined
-  }, "link"));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Index);
-
-/***/ }),
-
-/***/ "./services/Api.js":
-/*!*************************!*\
-  !*** ./services/Api.js ***!
-  \*************************/
+/***/ "./src/services/Api.js":
+/*!*****************************!*\
+  !*** ./src/services/Api.js ***!
+  \*****************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -204,14 +388,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/router */ "next/router");
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var jwt_simple__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jwt-simple */ "jwt-simple");
-/* harmony import */ var jwt_simple__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jwt_simple__WEBPACK_IMPORTED_MODULE_3__);
-
 
 
 
 const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
-  baseURL: 'http://localhost:3333'
+  baseURL: 'http://192.168.1.6:3333'
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
   async isAuthenticated(setLoading, isLoginPage) {
@@ -221,7 +402,7 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
       isLoginPage ? setLoading(false) : next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
     } else {
       try {
-        const response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:3333/is_authenticated', {
+        const response = await Fetch.get('/is_authenticated', {
           headers: {
             token
           }
@@ -244,7 +425,9 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
           }
         }
       } catch (error) {
-        next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/login');
+        console.log({
+          error
+        });
       }
     }
   },
@@ -263,18 +446,25 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
     } = data;
 
     if (!error) {
-      await _setUser(user);
+      const {
+        name,
+        id,
+        acess_level,
+        avatar_src
+      } = user;
+      const userCookie = `${name.replace(" ", "#")}$${username}$${id}$${avatar_src}$${acess_level}`;
+      await _setUser(name, username, id, acess_level, avatar_src);
 
       if (persistLogged) {
         js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('DICAST_AUTH_TOKEN', auth, {
           expires: 50000
         });
-        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('USERNAME', user.username, {
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('USER', userCookie, {
           expires: 50000
         }); //TODO colocar o resto das infos nos cookies
       } else {
         js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('DICAST_AUTH_TOKEN', auth);
-        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('USERNAME', user.username); //TODO colocar o resto das infos nos cookies
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('USER', userCookie); //TODO colocar o resto das infos nos cookies
       }
 
       next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push('/');
@@ -295,28 +485,26 @@ const Fetch = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
     }
   },
 
-  async getUser(userId, setUser) {
+  async getPodcasts(search) {
+    const response = await Fetch.get(`/podcasts?search=${search}`);
     const {
-      data
-    } = await Fetch.get(`/users?user_id=${userId}`);
-    const {
-      user
-    } = data;
-    setUser(user);
+      podcasts
+    } = response.data;
+    return podcasts;
   }
 
 });
 
 /***/ }),
 
-/***/ 5:
+/***/ 4:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\marce\Programação\Projetos\dicast\frontend\pages\index.js */"./pages/index.js");
+module.exports = __webpack_require__(/*! c:\Users\marce\Programação\Projetos\dicast\frontend\pages\index.js */"./pages/index.js");
 
 
 /***/ }),
@@ -340,17 +528,6 @@ module.exports = require("axios");
 /***/ (function(module, exports) {
 
 module.exports = require("js-cookie");
-
-/***/ }),
-
-/***/ "jwt-simple":
-/*!*****************************!*\
-  !*** external "jwt-simple" ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("jwt-simple");
 
 /***/ }),
 

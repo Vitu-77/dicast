@@ -4818,7 +4818,7 @@ function connect(options) {
       error.name = err.name;
       error.stack = err.stack; // __NEXT_DIST_DIR is provided by webpack
 
-      (0, _sourceMapSupport.rewriteStacktrace)(error, "C:\\Users\\marce\\Programação\\Projetos\\dicast\\frontend\\.next");
+      (0, _sourceMapSupport.rewriteStacktrace)(error, "c:\\Users\\marce\\Programação\\Projetos\\dicast\\frontend\\.next");
       return error;
     }
   };
